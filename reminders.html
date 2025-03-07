@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>یادآوری‌ها - سیستم مدیریت مشتری</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <h1>سیستم مدیریت مشتری</h1>
+            </div>
+            <div class="date-time" id="date-time"></div>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> داشبورد</a></li>
+                <li><a href="customers.html"><i class="fas fa-users"></i> مدیریت مشتریان</a></li>
+                <li class="active"><a href="reminders.html"><i class="fas fa-calendar-alt"></i> یادآوری‌ها</a></li>
+                <li><a href="finances.html"><i class="fas fa-money-bill-wave"></i> امور مالی</a></li>
+                <li><a href="statistics.html"><i class="fas fa-chart-pie"></i> آمار و گزارشات</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <div class="reminders-page">
+                <h2>یادآوری‌ها</h2>
+                
+                <div class="action-bar">
+                    <button id="add-reminder-btn" class="btn primary"><i class="fas fa-plus"></i> افزودن یادآوری جدید</button>
+                    <div class="filter-options">
+                        <select id="reminder-filter">
+                            <option value="all">همه یادآوری‌ها</option>
+                            <option value="today">امروز</option>
+                            <option value="upcoming">آینده</option>
+                            <option value="past">گذشته</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="calendar-view">
+                    <div class="calendar-header">
+                        <button id="prev-month"><i class="fas fa-chevron-right"></i></button>
+                        <h3 id="current-month"></h3>
+                        <button id="next-month"><i class="fas fa-chevron-left"></i></button>
+                    </div>
+                    <div class="calendar-days">
+                        <div class="day-name">ش</div>
+                        <div class="day-name">ی</div>
+                        <div class="day-name">د</div>
+                        <div class="day-name">س</div>
+                        <div class="day-name">چ</div>
+                        <div class="day-name">پ</div>
+                        <div class="day-name">ج</div>
+                    </div>
+                    <div class="calendar-dates" id="calendar-dates">
+                        <!-- Calendar dates will be added here by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="reminders-list">
+                    <h3>لیست یادآوری‌ها</h3>
+                    <div class="table-container">
+                        <table id="reminders-table">
+                            <thead>
+                                <tr>
+                                    <th>عنوان</th>
+                                    <th>مشتری</th>
+                                    <th>تاریخ</th>
+                                    <th>زمان</th>
+                                    <th>وضعیت</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Reminders will be added here by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>سیستم مدیریت مشتری &copy; <span id="current-year"></span></p>
+        </footer>
+    </div>
+
+    <!-- Modal for adding/editing reminder -->
+    <div id="reminder-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="reminder-modal-title">افزودن یادآوری جدید</h2>
+            <form id="reminder-form">
+                <input type="hidden" id="reminder-id">
+                <div class="form-group">
+                    <label for="reminder-title">عنوان:</label>
+                    <input type="text" id="reminder-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="reminder-customer">مشتری مرتبط:</label>
+                    <select id="reminder-customer">
+                        <option value="">بدون مشتری</option>
+                        <!-- Customers will be added here by JavaScript -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reminder-date">تاریخ:</label>
+                    <input type="date" id="reminder-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="reminder-time">زمان:</label>
+                    <input type="time" id="reminder-time" required>
+                </div>
+                <div class="form-group">
+                    <label for="reminder-description">توضیحات:</label>
+                    <textarea id="reminder-description"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn primary">ذخیره</button>
+                    <button type="button" class="btn" id="cancel-reminder">انصراف</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="theme-switcher">
+        <button id="theme-toggle"><i class="fas fa-palette"></i></button>
+        <div class="theme-options">
+            <div class="theme-option" data-theme="default"></div>
+            <div class="theme-option" data-theme="blue"></div>
+            <div class="theme-option" data-theme="green"></div>
+            <div class="theme-option" data-theme="purple"></div>
+        </div>
+    </div>
+
+    <script src="scripts/common.js"></script>
+    <script src="scripts/reminders.js"></script>
+</body>
+</html>

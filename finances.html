@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>امور مالی - سیستم مدیریت مشتری</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <h1>سیستم مدیریت مشتری</h1>
+            </div>
+            <div class="date-time" id="date-time"></div>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> داشبورد</a></li>
+                <li><a href="customers.html"><i class="fas fa-users"></i> مدیریت مشتریان</a></li>
+                <li><a href="reminders.html"><i class="fas fa-calendar-alt"></i> یادآوری‌ها</a></li>
+                <li class="active"><a href="finances.html"><i class="fas fa-money-bill-wave"></i> امور مالی</a></li>
+                <li><a href="statistics.html"><i class="fas fa-chart-pie"></i> آمار و گزارشات</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <div class="finances-page">
+                <h2>امور مالی</h2>
+                
+                <div class="finance-summary">
+                    <div class="summary-card income">
+                        <div class="card-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                        <div class="card-content">
+                            <h3>درآمد کل</h3>
+                            <p id="total-income">0 تومان</p>
+                        </div>
+                    </div>
+                    <div class="summary-card expense">
+                        <div class="card-icon"><i class="fas fa-money-bill-wave"></i></div>
+                        <div class="card-content">
+                            <h3>هزینه کل</h3>
+                            <p id="total-expense">0 تومان</p>
+                        </div>
+                    </div>
+                    <div class="summary-card profit">
+                        <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="card-content">
+                            <h3>سود خالص</h3>
+                            <p id="net-profit">0 تومان</p>
+                        </div>
+                    </div>
+                    <div class="summary-card contracts">
+                        <div class="card-icon"><i class="fas fa-file-contract"></i></div>
+                        <div class="card-content">
+                            <h3>تعداد قراردادها</h3>
+                            <p id="contract-total">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="finance-tabs">
+                    <div class="tab-header">
+                        <button class="tab-btn active" data-tab="contracts">قراردادها و فروش</button>
+                        <button class="tab-btn" data-tab="expenses">هزینه‌ها</button>
+                    </div>
+                    
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="contracts-tab">
+                            <div class="action-bar">
+                                <button id="add-contract-btn" class="btn primary"><i class="fas fa-plus"></i> افزودن قرارداد جدید</button>
+                                <div class="filter-options">
+                                    <select id="contract-filter">
+                                        <option value="all">همه قراردادها</option>
+                                        <option value="active">فعال</option>
+                                        <option value="completed">تکمیل شده</option>
+                                        <option value="cancelled">لغو شده</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="table-container">
+                                <table id="contracts-table">
+                                    <thead>
+                                        <tr>
+                                            <th>عنوان</th>
+                                            <th>مشتری</th>
+                                            <th>تاریخ شروع</th>
+                                            <th>تاریخ پایان</th>
+                                            <th>مبلغ (تومان)</th>
+                                            <th>وضعیت</th>
+                                            <th>عملیات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Contracts will be added here by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane" id="expenses-tab">
+                            <div class="action-bar">
+                                <button id="add-expense-btn" class="btn primary"><i class="fas fa-plus"></i> افزودن هزینه جدید</button>
+                                <div class="filter-options">
+                                    <select id="expense-filter">
+                                        <option value="all">همه هزینه‌ها</option>
+                                        <option value="month">ماه جاری</option>
+                                        <option value="year">سال جاری</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="table-container">
+                                <table id="expenses-table">
+                                    <thead>
+                                        <tr>
+                                            <th>عنوان</th>
+                                            <th>دسته‌بندی</th>
+                                            <th>تاریخ</th>
+                                            <th>مبلغ (تومان)</th>
+                                            <th>توضیحات</th>
+                                            <th>عملیات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Expenses will be added here by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>سیستم مدیریت مشتری &copy; <span id="current-year"></span></p>
+        </footer>
+    </div>
+
+    <!-- Modal for adding/editing contract -->
+    <div id="contract-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="contract-modal-title">افزودن قرارداد جدید</h2>
+            <form id="contract-form">
+                <input type="hidden" id="contract-id">
+                <div class="form-group">
+                    <label for="contract-title">عنوان قرارداد:</label>
+                    <input type="text" id="contract-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="contract-customer">مشتری:</label>
+                    <select id="contract-customer" required>
+                        <!-- Customers will be added here by JavaScript -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="contract-start-date">تاریخ شروع:</label>
+                    <input type="date" id="contract-start-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="contract-end-date">تاریخ پایان:</label>
+                    <input type="date" id="contract-end-date">
+                </div>
+                <div class="form-group">
+                    <label for="contract-amount">مبلغ (تومان):</label>
+                    <input type="number" id="contract-amount" required>
+                </div>
+                <div class="form-group">
+                    <label for="contract-status">وضعیت:</label>
+                    <select id="contract-status" required>
+                        <option value="active">فعال</option>
+                        <option value="completed">تکمیل شده</option>
+                        <option value="cancelled">لغو شده</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="contract-description">توضیحات:</label>
+                    <textarea id="contract-description"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn primary">ذخیره</button>
+                    <button type="button" class="btn" id="cancel-contract">انصراف</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for adding/editing expense -->
+    <div id="expense-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="expense-modal-title">افزودن هزینه جدید</h2>
+            <form id="expense-form">
+                <input type="hidden" id="expense-id">
+                <div class="form-group">
+                    <label for="expense-title">عنوان هزینه:</label>
+                    <input type="text" id="expense-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="expense-category">دسته‌بندی:</label>
+                    <select id="expense-category" required>
+                        <option value="office">دفتر و تجهیزات</option>
+                        <option value="utilities">قبوض و خدمات</option>
+                        <option value="salary">حقوق و دستمزد</option>
+                        <option value="marketing">بازاریابی و تبلیغات</option>
+                        <option value="travel">سفر و حمل و نقل</option>
+                        <option value="other">سایر</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="expense-date">تاریخ:</label>
+                    <input type="date" id="expense-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="expense-amount">مبلغ (تومان):</label>
+                    <input type="number" id="expense-amount" required>
+                </div>
+                <div class="form-group">
+                      required>
+                </div>
+                <div class="form-group">
+                    <label for="expense-description">توضیحات:</label>
+                    <textarea id="expense-description"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn primary">ذخیره</button>
+                    <button type="button" class="btn" id="cancel-expense">انصراف</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="theme-switcher">
+        <button id="theme-toggle"><i class="fas fa-palette"></i></button>
+        <div class="theme-options">
+            <div class="theme-option" data-theme="default"></div>
+            <div class="theme-option" data-theme="blue"></div>
+            <div class="theme-option" data-theme="green"></div>
+            <div class="theme-option" data-theme="purple"></div>
+        </div>
+    </div>
+
+    <script src="scripts/common.js"></script>
+    <script src="scripts/finances.js"></script>
+</body>
+</html>
